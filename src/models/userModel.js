@@ -12,6 +12,10 @@ const userSchema = new Schema({
         required : true,
         unique : true,
     },
+    password : {
+        type : String,
+        required : true,
+    },
     profileImg : {
         type : String,
         default : "https://api.adorable.io/avatars/285/default.png"
@@ -32,4 +36,4 @@ const userSchema = new Schema({
 
 const userModel = model("users",userSchema);
 
-module.exports = userModel;
+module.exports = userModel;  

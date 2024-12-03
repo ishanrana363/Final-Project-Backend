@@ -71,6 +71,15 @@ mongoose.connect(dbPort).then((res) => {
     console.log(`--Database connection failed-- ${error}`)
 });
 
+const router = require("./src/routes/api");
+
+app.use("/api/v1", router );
+
+
+app.get("/", (req, res) => {
+    res.send("Server is running");
+});
+
 
 
 
