@@ -46,7 +46,7 @@ const userLogin = async (req, res) => {
             status: 'success',
             msg: 'User logged in successfully', 
             token: token, 
-            userData
+            user : userData
             /*  */
 });
     } catch (error) {
