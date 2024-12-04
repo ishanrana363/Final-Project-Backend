@@ -8,7 +8,7 @@ const userCotroller = require("../controllers/userController");
 
 router.post("/register", userCotroller.userRegistration);
 
-// router.post("/login", userCotroller.loginUser);
+router.post("/login", userCotroller.userLogin );
 
 // router.get("/profile", userCotroller.getProfile);
 
