@@ -22,15 +22,27 @@ const userRegistration = async (req, res) => {
 
 // user login controller
 
-const userLogin = async (req,res)=>{
+const userLogin = async (req, res) => {
     try {
-        const {email, password} = req.body;
-        const user = await userModel.findOne({email: email});
+        const { email, password } = req.body;
+        const user = await userModel.findOne({ email: email });
         if (!user) return res.status(400).json({ message: 'User not found' });
+
         const isMatch = await bcrypt.compareSync(password, user.password);
         if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
-        const token = jwt.sign({id:user._id,role:user.role,email:user.email}, process.env.JWT_SECRET, {expiresIn: '1h'});
-        res.json({status:'success', token: token});
+        const userData = {
+            _id: user._id,
+            username: user.username,
+            email: user.email,
+            profileImg: user.profileImg,
+            bio: user.bio,
+            profassion: user.profassion,
+            role: user.role
+
+
+        }
+        const token = jwt.sign({ id: user._id, role: user.role, email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        res.json({ status: 'success', token: token, data: userData });
     } catch (error) {
         console.error(error);
         res.status(500).json({
@@ -41,4 +53,4 @@ const userLogin = async (req,res)=>{
 };
 
 
-module.exports = {userRegistration,userLogin};
+module.exports = { userRegistration, userLogin };

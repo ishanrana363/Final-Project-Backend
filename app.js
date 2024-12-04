@@ -38,11 +38,20 @@ app.use(hpp())
 
 // Using cors for enabling CORS
 
+const allowedOrigins = ['http://localhost:5173'];
+
 app.use(cors({
-    origin: 'https://final-project-backend-steel.vercel.app/api/v1', // Explicitly specify the allowed origin
-    credentials: true               // Allow credentials (cookies, etc.)
+    origin: function (origin, callback) {
+        if (allowedOrigins.includes(origin) || !origin) {
+            callback(null, origin);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true, // Enable credentials
 }));
 
+app.options('*', cors());
 
 
 // Using MongoSanitize for sanitize user input
