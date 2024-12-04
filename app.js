@@ -20,21 +20,10 @@ app.set('trust proxy', 1); // Trust the first proxy
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
     max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
-    keyGenerator: (req, res) => {
-        const xForwardedFor = req.headers['x-forwarded-for'];
-        if (xForwardedFor) {
-            const ips = xForwardedFor.split(',').map(ip => ip.trim());
-            return ips[0]; // Use the first IP in the list
-        }
-        return req.ip; // Fallback to the direct IP
-    }
 });
 app.use(limiter);
 
-app.use((req, res, next) => {
-    console.log('X-Forwarded-For:', req.headers['x-forwarded-for']);
-    next();
-});
+
 
 // Using helmet for secure http response
 
