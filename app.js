@@ -12,7 +12,6 @@ require('dotenv').config()
 
 
 const app = new express();
-app.set('trust proxy', 1); // Trust the first proxy
 
 
 
@@ -39,7 +38,12 @@ app.use(hpp())
 
 // Using cors for enabling CORS
 
-app.use(cors())
+app.use(cors({
+    origin: 'https://final-project-backend-steel.vercel.app/api/v1', // Explicitly specify the allowed origin
+    credentials: true               // Allow credentials (cookies, etc.)
+}));
+
+
 
 // Using MongoSanitize for sanitize user input
 
