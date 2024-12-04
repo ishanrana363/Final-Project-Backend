@@ -53,9 +53,9 @@ app.use(cookieParser())
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.set('trust proxy', 'loopback'); // Only trust localhost proxy
-app.set('trust proxy', '192.168.0.1'); // Trust specific IP
-app.set('trust proxy', 1); // Trust the first proxy
+// app.set('trust proxy', 'loopback'); // Only trust localhost proxy
+// app.set('trust proxy', '192.168.0.1'); // Trust specific IP
+// app.set('trust proxy', 1); // Trust the first proxy
 // Database Connect 
 
 app.get("/", (req, res) => {
