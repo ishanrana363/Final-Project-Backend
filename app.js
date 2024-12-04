@@ -76,10 +76,6 @@ const router = require("./src/routes/api");
 app.use("/api/v1", router );
 
 
-app.get("/", (req, res) => {
-    res.send("Server is running");
-});
-
 
 
 
