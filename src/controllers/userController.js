@@ -20,7 +20,7 @@ const userRegistration = async (req, res) => {
     }
 };
 
-// user login
+// user login controller
 
 const userLogin = async (req,res)=>{
     try {
@@ -37,7 +37,7 @@ const userLogin = async (req,res)=>{
             msg: error.message
         })
     }
-}
+};
 
 
 module.exports = {userRegistration,userLogin};
