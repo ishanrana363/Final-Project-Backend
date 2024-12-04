@@ -50,10 +50,7 @@ app.use(hpp())
 
 // Using cors for enabling CORS
 
-app.use(cors({
-    origin: "https://final-project-backend-steel.vercel.app/api/v1",
-    credentials: true
-}))
+app.use(cors())
 
 // Using MongoSanitize for sanitize user input
 
