@@ -30,6 +30,8 @@ const userLogin = async (req, res) => {
 
         const isMatch = await bcrypt.compareSync(password, user.password);
         if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
+
+
         const userData = {
             _id: user._id,
             username: user.username,
@@ -41,14 +43,22 @@ const userLogin = async (req, res) => {
 
 
         }
-        const token = jwt.sign({ id: user._id, role: user.role, email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ id: user._id, role: user.role, email: user.email }, process.env.JWT_SECRET, { expiresIn: '12h' });
+
+        res.cookie("token", token, {
+            maxAge: 1 * 60 * 1000,
+            httpOnly: true,
+            secure: true,
+            sameSite: "none"
+        });
+
         res.json({
             status: 'success',
-            msg: 'User logged in successfully', 
-            token: token, 
-            user : userData
-            /*  */
-});
+            msg: 'User logged in successfully',
+            token: token,
+            user: userData
+        });
+
     } catch (error) {
         console.error(error);
         res.status(500).json({
@@ -58,5 +68,20 @@ const userLogin = async (req, res) => {
     }
 };
 
+const handleLogOut = async (req,res)=>{
+    try {
+        res.clearCookie("token");
+        return res.status(200).json({
+            status:"success",
+            msg : "User logout successfully"
+        });
+    } catch (error) {
+        return res.status(500).json({
+            status:"fail",
+            msg : e.toString()
+        });
+    }
+}
 
-module.exports = { userRegistration, userLogin };
+
+module.exports = { userRegistration, userLogin,handleLogOut };

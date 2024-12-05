@@ -10,6 +10,8 @@ router.post("/register", userCotroller.userRegistration);
 
 router.post("/login", userCotroller.userLogin );
 
+router.post("/logout", userCotroller.handleLogOut)
+
 // router.get("/profile", userCotroller.getProfile);
 
 
