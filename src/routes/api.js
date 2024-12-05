@@ -10,7 +10,9 @@ router.post("/register", userCotroller.userRegistration);
 
 router.post("/login", userCotroller.userLogin );
 
-router.post("/logout", userCotroller.handleLogOut)
+router.post("/logout", userCotroller.handleLogOut);
+
+router.get("/all-users", userCotroller.getAllUsers);
 
 // router.get("/profile", userCotroller.getProfile);
 

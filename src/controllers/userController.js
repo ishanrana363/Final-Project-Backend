@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const userModel = require('../models/userModel');
 const jwt = require("jsonwebtoken");
+const { successResponse, errorResponse } = require('../utility/response');
 require("dotenv").config();
 const userRegistration = async (req, res) => {
     try {
@@ -68,6 +69,7 @@ const userLogin = async (req, res) => {
     }
 };
 
+// lgout controller
 const handleLogOut = async (req,res)=>{
     try {
         res.clearCookie("token");
@@ -81,7 +83,18 @@ const handleLogOut = async (req,res)=>{
             msg : e.toString()
         });
     }
-}
+};
+
+// all users
+
+const getAllUsers = async (req, res) => {
+    try {
+        const users = await userModel.find({},).sort({createdAt : -1});
+        successResponse(res,200,"find all users",users);
+    } catch (error) {
+        errorResponse(res,500,"something went wrong",error)
+    }
+};
 
 
-module.exports = { userRegistration, userLogin,handleLogOut };
+module.exports = {userRegistration, userLogin,handleLogOut,getAllUsers};
