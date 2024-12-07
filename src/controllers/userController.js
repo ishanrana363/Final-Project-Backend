@@ -89,12 +89,24 @@ const handleLogOut = async (req,res)=>{
 
 const getAllUsers = async (req, res) => {
     try {
-        const users = await userModel.find({},).sort({createdAt : -1});
+        const users = await userModel.find({},'username email profileImg bio profassion role ').sort({createdAt : -1});
         successResponse(res,200,"find all users",users);
     } catch (error) {
         errorResponse(res,500,"something went wrong",error)
     }
 };
 
+// delete users
 
-module.exports = {userRegistration, userLogin,handleLogOut,getAllUsers};
+const deleteUser = async (req, res) => {
+    try {
+        const userId = req.params.id;
+        const user = await userModel.findByIdAndDelete(userId);
+        if (!user) return errorResponse(res,404,"user not found")
+        return successResponse(res,200,"user deleted successfully ",user)
+    } catch (error) {
+        return errorResponse(res,500,"something went wrong",error);
+    }
+};
+
+module.exports = {userRegistration, userLogin,handleLogOut,getAllUsers,deleteUser};
