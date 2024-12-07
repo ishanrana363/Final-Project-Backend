@@ -109,4 +109,33 @@ const deleteUser = async (req, res) => {
     }
 };
 
-module.exports = {userRegistration, userLogin,handleLogOut,getAllUsers,deleteUser};
+// update users
+
+const updateUser = async (req, res) => {
+    try {
+        const userId = req.headers.id;
+        console.log(userId);
+
+        const {username,email,profileImg,bio,profassion} = req.body;
+        console.log(username,email,profileImg,bio,profassion);
+
+        const update = {
+            username,
+            email,
+            profileImg,
+            bio,
+            profassion
+        };
+
+        const updatedUser = await userModel.findByIdAndUpdate({_id : userId},update, {new: true});
+
+        if (!updatedUser) return errorResponse(res,404,"user not found")
+
+        return successResponse(res,200,"user updated successfully ",updatedUser)
+
+    } catch (error) {
+        return errorResponse(res,500,"something went wrong",error);
+    }
+};
+
+module.exports = {userRegistration, userLogin,handleLogOut,getAllUsers,deleteUser,updateUser};
