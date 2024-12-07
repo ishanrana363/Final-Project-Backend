@@ -19,6 +19,8 @@ router.delete("/delete-user/:id", isLogIn,isAdmin, userCotroller.deleteUser);
 
 router.put("/update-user", isLogIn,userCotroller.updateUser);
 
+router.put("/update-role/:id" , isLogIn,isAdmin,userCotroller.updateUserRole )
+
 // router.get("/profile", userCotroller.getProfile);
 
 

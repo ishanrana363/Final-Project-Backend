@@ -138,4 +138,25 @@ const updateUser = async (req, res) => {
     }
 };
 
-module.exports = {userRegistration, userLogin,handleLogOut,getAllUsers,deleteUser,updateUser};
+const updateUserRole = async (req,res) =>{
+    try {
+        let userId = req.headers.id;
+        let role = req.body.role;
+        let id = req.params.id;
+        const filter = {
+            _id: userId,
+            _id : id
+        };
+        let update = {
+            role
+        };
+        let user = await userModel.findByIdAndUpdate(filter,update,{new:true});
+        if (!user) return errorResponse(res,404,"user not found",error={});
+        return successResponse(res,200,"user role updated successfully",user);
+    } catch (error) {
+        return errorResponse(res,500,"something went wrong",error);
+    }
+}
+
+
+module.exports = {userRegistration, userLogin,handleLogOut,getAllUsers,deleteUser,updateUser,updateUserRole};
