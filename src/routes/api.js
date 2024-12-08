@@ -29,6 +29,9 @@ router.put("/update-role/:id" , isLogIn,isAdmin,userCotroller.updateUserRole )
 // product related api
 
 router.post("/create-product", isLogIn,isAdmin,productController.createProduct);
+
 router.get("/", productController.getAllProducts);
+
+router.get("/single-product/:id", productController.getProductById);
 
 module.exports = router;

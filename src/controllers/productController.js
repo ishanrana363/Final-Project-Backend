@@ -65,24 +65,47 @@ const getAllProducts = async (req, res) => {
             }
         }
 
-        const skip = ( parseInt(page)-1) * parseInt(limit);
+        const skip = (parseInt(page) - 1) * parseInt(limit);
 
         const totalProducts = await productModel.countDocuments(filter);
 
         const totalPages = Math.ceil(totalProducts / parseInt(limit));
 
-        const products = await productModel.find(filter).skip(skip).limit(parseInt(limit)).populate("author",'username eamil ');
+        const products = await productModel.find(filter).skip(skip).limit(parseInt(limit)).populate("author", 'username eamil ');
 
 
-        successResponse(res, 200, "Find all products", data={
+        successResponse(res, 200, "Find all products", data = {
             products,
             totalProducts,
             totalPages
-        } );
+        });
     } catch (error) {
         errorResponse(res, 500, "Something went wrong", error);
     }
 };
 
+// Get a single product
 
-module.exports = { createProduct,getAllProducts };
+const getProductById = async (req, res) => {
+    try {
+        const id = req.params.id;
+
+        // Find the product and populate the author's username and email
+        const product = await productModel.findById(id).populate("author", "username email");
+
+        if (!product) {
+            return errorResponse(res, 404, "Product not found.");
+        }
+
+        // Find all reviews for the product
+        const reviews = await reviewModel.find({ productId: id });
+
+        // Send a success response with the product and reviews
+        successResponse(res, 200, "Product found successfully.", { product, reviews });
+    } catch (error) {
+        errorResponse(res, 500, "Something went wrong.", error);
+    }
+};
+
+
+module.exports = { createProduct, getAllProducts, getProductById };
