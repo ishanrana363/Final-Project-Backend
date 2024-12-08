@@ -3,7 +3,12 @@ const express = require('express');
 const router = express.Router();
 // user controller
 const userCotroller = require("../controllers/userController");
+// middleware
 const { isLogIn, isAdmin } = require('../moddlewares/authMiddleware');
+
+// product controller
+
+const productController = require("../controllers/productController");
 
 // user related routes
 
@@ -21,7 +26,9 @@ router.put("/update-user", isLogIn,userCotroller.updateUser);
 
 router.put("/update-role/:id" , isLogIn,isAdmin,userCotroller.updateUserRole )
 
-// router.get("/profile", userCotroller.getProfile);
+// product related api
 
+router.post("/create-product", isLogIn,isAdmin,productController.createProduct);
+router.get("/", productController.getAllProducts);
 
 module.exports = router;
