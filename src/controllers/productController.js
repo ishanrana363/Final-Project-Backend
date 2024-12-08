@@ -107,5 +107,21 @@ const getProductById = async (req, res) => {
     }
 };
 
+// Update a product
 
-module.exports = { createProduct, getAllProducts, getProductById };
+const updateProduct = async (req, res) => {
+    try {
+        let id = req.params.id;
+        let update = req.body;
+        let product = await productModel.findByIdAndUpdate(id, update, { new: true });
+        if (!product) {
+            return errorResponse(res, 404, "Product not found.");
+        }
+        successResponse(res, 200, "Product updated successfully.", product);
+    } catch (error) {
+        return errorResponse(res, 500, "Something went wrong", error);
+    }
+};
+
+
+module.exports = { createProduct, getAllProducts, getProductById,updateProduct };
