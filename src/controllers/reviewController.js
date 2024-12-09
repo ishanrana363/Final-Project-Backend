@@ -72,6 +72,17 @@ const getReviewsByUserId = async (req, res) => {
     }
 };
 
+// review count api
+
+const getReviewCount = async (req, res) => {
+    try {
+        const totalReview = await Review.countDocuments({});
+        return successResponse(res, 200, "Review count fetched successfully",totalReview);
+    } catch (error) {
+        return errorResponse(res, 500, "Something went wrong", error.message);
+    }
+};
 
 
-module.exports = { createReview, getReviewsByUserId };
+
+module.exports = { createReview, getReviewsByUserId,getReviewCount };

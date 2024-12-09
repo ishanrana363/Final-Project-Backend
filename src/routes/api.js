@@ -40,5 +40,6 @@ router.get("/single-product/:id", productController.getProductById);
 
 router.post("/post-review", isLogIn, reviewController.createReview);
 router.get("/product-review",isLogIn, reviewController.getReviewsByUserId);
+router.get("/total-review",isLogIn, reviewController.getReviewCount);
 
 module.exports = router;
