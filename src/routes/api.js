@@ -39,6 +39,6 @@ router.get("/single-product/:id", productController.getProductById);
 // revicew related api
 
 router.post("/post-review", isLogIn, reviewController.createReview);
-router.get("/product-review/:userId",isLogIn, reviewController.getReviewsByUserId);
+router.get("/product-review",isLogIn, reviewController.getReviewsByUserId);
 
 module.exports = router;
