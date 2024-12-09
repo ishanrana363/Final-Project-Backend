@@ -35,6 +35,7 @@ router.post("/create-product", isLogIn, isAdmin, productController.createProduct
 router.get("/", productController.getAllProducts);
 
 router.get("/single-product/:id", productController.getProductById);
+router.put("/product-update/:id",isLogIn,isAdmin ,productController.updateProduct)
 
 // revicew related api
 
