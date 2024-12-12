@@ -98,7 +98,7 @@ const getProductById = async (req, res) => {
         }
 
         // Find all reviews for the product
-        const reviews = await reviewModel.find({ productId: id }).populate("userId", "username email");
+        const reviews = await reviewModel.find({ productId: id }).populate("userId", "username email profileImg");
 
         // Send a success response with the product and reviews
         successResponse(res, 200, "Product found successfully.", { product, reviews });
