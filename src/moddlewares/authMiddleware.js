@@ -3,10 +3,11 @@ const accessTokenKey = process.env.JWT_SECRET;
 
 const isLogIn = (req, res, next) => {
     try {
-        let token = req.headers.authorization;
-        if (!token) {
-            token = req.cookies.token
-        }
+        // let token = req.headers.authorization;
+        let token = req.cookies.token
+        // if (!token) {
+        //     token = req.cookies.token
+        // }
 
         if (!token) {
             return res.status(401).json({
