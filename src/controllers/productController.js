@@ -98,7 +98,7 @@ const getProductById = async (req, res) => {
         }
 
         // Find all reviews for the product
-        const reviews = await reviewModel.find({ productId: id });
+        const reviews = await reviewModel.find({ productId: id }).populate("userId", "username email");
 
         // Send a success response with the product and reviews
         successResponse(res, 200, "Product found successfully.", { product, reviews });
@@ -136,4 +136,4 @@ const deleteProduct = async (req, res) => {
     }
 };
 
-module.exports = { createProduct, getAllProducts, getProductById,updateProduct,deleteProduct };
+module.exports = { createProduct, getAllProducts, getProductById, updateProduct, deleteProduct };
