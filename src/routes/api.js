@@ -11,6 +11,8 @@ const { isLogIn, isAdmin } = require('../moddlewares/authMiddleware');
 const productController = require("../controllers/productController");
 // rivewe controller
 const reviewController = require("../controllers/reviewController");
+// orderController 
+const orderController = require("../controllers/orderController");
 
 // user related routes
 
@@ -35,5 +37,11 @@ router.delete("/product-delete/:id",isLogIn,isAdmin,productController.deleteProd
 router.post("/post-review", isLogIn, reviewController.createReview);
 router.get("/product-review",isLogIn, reviewController.getReviewsByUserId);
 router.get("/total-review",isLogIn, reviewController.getReviewCount);
+
+// payment related api
+
+router.post("/create-checkout-session", orderController.makePayment )
+
+
 
 module.exports = router;
