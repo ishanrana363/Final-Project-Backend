@@ -26,7 +26,7 @@ const orderSchema = new Schema({
     },
     status:{
         type : String,
-        enun : ["Pending","Processing","Shipped","Completed"],
+        enun : ["pending","processing","shipped","completed"],
         default : "Pending"
     }
 },{timestamps:true,versionKey:false});

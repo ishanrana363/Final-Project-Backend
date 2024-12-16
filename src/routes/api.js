@@ -40,8 +40,9 @@ router.get("/total-review",isLogIn, reviewController.getReviewCount);
 
 // payment related api
 
-router.post("/create-checkout-session", orderController.makePayment )
-router.post("/confirm-payment", orderController.confirmOrder  )
+router.post("/create-checkout-session", orderController.makePayment );
+router.post("/confirm-payment", orderController.confirmOrder  );
+router.get("/all-orders/:email",orderController.getOrderByEmail);
 
 
 
