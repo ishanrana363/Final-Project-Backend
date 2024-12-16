@@ -82,11 +82,30 @@ const getOrderByEmail = async (req, res) => {
     } catch (error) {
         return errorResponse(res, 500, "Something went wrong", error)
     }
-}
+};
+
+// order product by id
+
+const getOrderByProductId = async (req, res) => {
+    const productId = req.params.id;
+    try {
+        if (!productId) {
+            return errorResponse(res, 400, "Product id required");
+        }
+        const orders = await orderModel.findOne({_id : productId});
+        if (!orders) {
+            return errorResponse(res, 404, "Order not found")
+        }
+        return successResponse(res, 200, "Orders fetched successfully", orders);
+    } catch (error) {
+        return errorResponse(res, 500, "Something went wrong", error)
+    }
+};
 
 
 module.exports = {
     makePayment,
     confirmOrder,
-    getOrderByEmail
+    getOrderByEmail,
+    getOrderByProductId
 }

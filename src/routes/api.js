@@ -43,6 +43,7 @@ router.get("/total-review",isLogIn, reviewController.getReviewCount);
 router.post("/create-checkout-session", orderController.makePayment );
 router.post("/confirm-payment", orderController.confirmOrder  );
 router.get("/all-orders/:email",orderController.getOrderByEmail);
+router.get("/order-by-id/:id", orderController.getOrderByProductId);
 
 
 
