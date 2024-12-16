@@ -44,6 +44,8 @@ router.post("/create-checkout-session", orderController.makePayment );
 router.post("/confirm-payment", orderController.confirmOrder  );
 router.get("/all-orders/:email",orderController.getOrderByEmail);
 router.get("/order-by-id/:id", orderController.getOrderByProductId);
+router.get("/all-orders", isLogIn,isAdmin,orderController.allOrderByAdmin );
+router.put("/order-update/:id", isLogIn,isAdmin ,orderController.orderStatusUpdate);
 
 
 

@@ -92,7 +92,7 @@ const getOrderByProductId = async (req, res) => {
         if (!productId) {
             return errorResponse(res, 400, "Product id required");
         }
-        const orders = await orderModel.findOne({_id : productId});
+        const orders = await orderModel.findOne({ _id: productId });
         if (!orders) {
             return errorResponse(res, 404, "Order not found")
         }
@@ -102,10 +102,45 @@ const getOrderByProductId = async (req, res) => {
     }
 };
 
+// all order by admin
+
+const allOrderByAdmin = async (req, res) => {
+    try {
+        const orders = await orderModel.find().sort({ createdAt: -1 })
+        if (orders.length === 0) {
+            return errorResponse(res, 404, "Order not found")
+        }
+        return successResponse(res, 200, "Orders fetched successfully", orders);
+    } catch (error) {
+        return errorResponse(res, 500, "Something went wrong", error)
+    }
+};
+
+// order status update
+
+const orderStatusUpdate = async (req, res) => {
+    const id = req.params.id;
+    const status = req.body.status;
+    const filter = {
+        _id: id,
+    }
+    try {
+        let data = await orderModel.findByIdAndUpdate(filter, { status: status }, { new: true, runValidators: true });
+        if (!data) {
+            return errorResponse(res, 404, "Order not found")
+        }
+        return successResponse(res, 200, "Order status updated successfully", data);
+    } catch (error) {
+        return errorResponse(res, 500, "Something went wrong", error);
+    }
+};
+
 
 module.exports = {
     makePayment,
     confirmOrder,
     getOrderByEmail,
-    getOrderByProductId
+    getOrderByProductId,
+    allOrderByAdmin,
+    orderStatusUpdate
 }
