@@ -5,7 +5,6 @@ const isLogIn = (req, res, next) => {
     try {
         let token = req.headers.authorization;
         // let token = req.cookies.token
-        console.log(token);
         if (!token) {
             token = req.cookies.token
         }

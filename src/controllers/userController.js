@@ -114,10 +114,8 @@ const deleteUser = async (req, res) => {
 const updateUser = async (req, res) => {
     try {
         const userId = req.headers.id;
-        console.log(userId);
 
         const {username,email,profileImg,bio,profassion} = req.body;
-        console.log(username,email,profileImg,bio,profassion);
 
         const update = {
             username,

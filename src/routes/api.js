@@ -13,6 +13,8 @@ const productController = require("../controllers/productController");
 const reviewController = require("../controllers/reviewController");
 // orderController 
 const orderController = require("../controllers/orderController");
+// statas controller
+const statasController = require("../controllers/statasController");
 
 // user related routes
 
@@ -47,6 +49,11 @@ router.get("/order-by-id/:id", orderController.getOrderByProductId);
 router.get("/all-orders", isLogIn,isAdmin,orderController.allOrderByAdmin );
 router.put("/order-update/:id", isLogIn,isAdmin ,orderController.orderStatusUpdate);
 router.delete("/order-delete/:id", isLogIn,isAdmin,orderController.deleteOrder);
+
+// statas related api
+
+router.get("/user-status/:email",  statasController.userStats);
+router.get("/admin-status", isLogIn, isAdmin ,statasController.adminStatas);
 
 
 
