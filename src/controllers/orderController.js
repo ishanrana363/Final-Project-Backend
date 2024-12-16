@@ -135,6 +135,21 @@ const orderStatusUpdate = async (req, res) => {
     }
 };
 
+// order delete
+
+const deleteOrder = async (req, res) => {
+    const id = req.params.id;
+    try {
+        let data = await orderModel.findByIdAndDelete(id);
+        if (!data) {
+            return errorResponse(res, 404, "Order not found")
+        }
+        return successResponse(res, 200, "Order deleted successfully", data);
+    } catch (error) {
+        return errorResponse(res, 500, "Something went wrong", error);
+    }
+};
+
 
 module.exports = {
     makePayment,
@@ -142,5 +157,6 @@ module.exports = {
     getOrderByEmail,
     getOrderByProductId,
     allOrderByAdmin,
-    orderStatusUpdate
+    orderStatusUpdate,
+    deleteOrder
 }
