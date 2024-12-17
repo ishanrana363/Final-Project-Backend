@@ -24,7 +24,8 @@ router.post("/logout", userCotroller.handleLogOut);
 router.get("/all-users", isLogIn, isAdmin, userCotroller.getAllUsers);
 router.delete("/delete-user/:id", isLogIn, isAdmin, userCotroller.deleteUser);
 router.put("/update-user", isLogIn, userCotroller.updateUser);
-router.put("/update-role/:id", isLogIn, isAdmin, userCotroller.updateUserRole)
+router.put("/update-role/:id", isLogIn, isAdmin, userCotroller.updateUserRole);
+router.get("/user-profile", isLogIn, userCotroller.userProfile);
 
 // product related api
 
@@ -45,7 +46,7 @@ router.get("/total-review",isLogIn, reviewController.getReviewCount);
 router.post("/create-checkout-session", orderController.makePayment );
 router.post("/confirm-payment", orderController.confirmOrder  );
 router.get("/all-orders/:email",isLogIn,orderController.getOrderByEmail);
-router.get("/order-by-id/:id", orderController.getOrderByProductId);
+router.get("/order-by-id/:id", isLogIn,orderController.getOrderByProductId);
 router.get("/all-orders", isLogIn,isAdmin,orderController.allOrderByAdmin );
 router.put("/order-update/:id", isLogIn,isAdmin ,orderController.orderStatusUpdate);
 router.delete("/order-delete/:id", isLogIn,isAdmin,orderController.deleteOrder);

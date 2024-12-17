@@ -70,17 +70,17 @@ const userLogin = async (req, res) => {
 };
 
 // lgout controller
-const handleLogOut = async (req,res)=>{
+const handleLogOut = async (req, res) => {
     try {
         res.clearCookie("token");
         return res.status(200).json({
-            status:"success",
-            msg : "User logout successfully"
+            status: "success",
+            msg: "User logout successfully"
         });
     } catch (error) {
         return res.status(500).json({
-            status:"fail",
-            msg : e.toString()
+            status: "fail",
+            msg: e.toString()
         });
     }
 };
@@ -89,10 +89,10 @@ const handleLogOut = async (req,res)=>{
 
 const getAllUsers = async (req, res) => {
     try {
-        const users = await userModel.find({},'username email profileImg bio profassion role ').sort({createdAt : -1});
-        successResponse(res,200,"find all users",users);
+        const users = await userModel.find({}, 'username email profileImg bio profassion role ').sort({ createdAt: -1 });
+        successResponse(res, 200, "find all users", users);
     } catch (error) {
-        errorResponse(res,500,"something went wrong",error)
+        errorResponse(res, 500, "something went wrong", error)
     }
 };
 
@@ -102,10 +102,10 @@ const deleteUser = async (req, res) => {
     try {
         const userId = req.params.id;
         const user = await userModel.findByIdAndDelete(userId);
-        if (!user) return errorResponse(res,404,"user not found")
-        return successResponse(res,200,"user deleted successfully ",user)
+        if (!user) return errorResponse(res, 404, "user not found")
+        return successResponse(res, 200, "user deleted successfully ", user)
     } catch (error) {
-        return errorResponse(res,500,"something went wrong",error);
+        return errorResponse(res, 500, "something went wrong", error);
     }
 };
 
@@ -115,7 +115,7 @@ const updateUser = async (req, res) => {
     try {
         const userId = req.headers.id;
 
-        const {username,email,profileImg,bio,profassion} = req.body;
+        const { username, email, profileImg, bio, profassion } = req.body;
 
         const update = {
             username,
@@ -125,36 +125,50 @@ const updateUser = async (req, res) => {
             profassion
         };
 
-        const updatedUser = await userModel.findByIdAndUpdate({_id : userId},update, {new: true});
+        const updatedUser = await userModel.findByIdAndUpdate({ _id: userId }, { $set: update }, { new: true });
 
-        if (!updatedUser) return errorResponse(res,404,"user not found")
+        if (!updatedUser) return errorResponse(res, 404, "user not found")
 
-        return successResponse(res,200,"user updated successfully ",updatedUser)
+        return successResponse(res, 200, "user updated successfully ", updatedUser)
 
     } catch (error) {
-        return errorResponse(res,500,"something went wrong",error);
+        return errorResponse(res, 500, "something went wrong", error);
     }
 };
 
-const updateUserRole = async (req,res) =>{
+const updateUserRole = async (req, res) => {
     try {
         let userId = req.headers.id;
         let role = req.body.role;
         let id = req.params.id;
         const filter = {
             _id: userId,
-            _id : id
+            _id: id
         };
         let update = {
             role
         };
-        let user = await userModel.findByIdAndUpdate(filter,update,{new:true});
-        if (!user) return errorResponse(res,404,"user not found",error={});
-        return successResponse(res,200,"user role updated successfully",user);
+        let user = await userModel.findByIdAndUpdate(filter, update, { new: true });
+        if (!user) return errorResponse(res, 404, "user not found", error = {});
+        return successResponse(res, 200, "user role updated successfully", user);
     } catch (error) {
-        return errorResponse(res,500,"something went wrong",error);
+        return errorResponse(res, 500, "something went wrong", error);
+    }
+};
+
+
+const userProfile = async (req, res) => {
+    try {
+        const id = req.headers.id;
+        const filter = {
+            _id: id
+        };
+        const user = await userModel.findOne(filter);
+        return successResponse(res, 200, "user profile updated successfully", user);
+    } catch (error) {
+        return errorResponse(res, 500, "Something went wrong", error)
     }
 }
 
 
-module.exports = {userRegistration, userLogin,handleLogOut,getAllUsers,deleteUser,updateUser,updateUserRole};
+module.exports = { userProfile, userRegistration, userLogin, handleLogOut, getAllUsers, deleteUser, updateUser, updateUserRole };
