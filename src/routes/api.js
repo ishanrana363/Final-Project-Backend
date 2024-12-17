@@ -4,7 +4,7 @@ const router = express.Router();
 // user controller
 const userCotroller = require("../controllers/userController");
 // middleware
-const { isLogIn, isAdmin } = require('../moddlewares/authMiddleware');
+const { isLogIn, isAdmin, isUser } = require('../moddlewares/authMiddleware');
 
 // product controller
 
@@ -44,7 +44,7 @@ router.get("/total-review",isLogIn, reviewController.getReviewCount);
 
 router.post("/create-checkout-session", orderController.makePayment );
 router.post("/confirm-payment", orderController.confirmOrder  );
-router.get("/all-orders/:email",orderController.getOrderByEmail);
+router.get("/all-orders/:email",isLogIn,orderController.getOrderByEmail);
 router.get("/order-by-id/:id", orderController.getOrderByProductId);
 router.get("/all-orders", isLogIn,isAdmin,orderController.allOrderByAdmin );
 router.put("/order-update/:id", isLogIn,isAdmin ,orderController.orderStatusUpdate);
@@ -52,7 +52,7 @@ router.delete("/order-delete/:id", isLogIn,isAdmin,orderController.deleteOrder);
 
 // statas related api
 
-router.get("/user-status/:email",  statasController.userStats);
+router.get("/user-status/:email", isLogIn, isUser, statasController.userStats);
 router.get("/admin-status", isLogIn, isAdmin ,statasController.adminStatas);
 
 

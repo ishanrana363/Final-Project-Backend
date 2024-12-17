@@ -41,30 +41,38 @@ const confirmOrder = async (req, res) => {
         const session = await stripe.checkout.sessions.retrieve(session_id, {
             expand: ["line_items", 'payment_intent']
         });
+
         const paymentIntentId = session.payment_intent.id;
+
         let order = await orderModel.findOne({ orderId: paymentIntentId });
+
         if (!order) {
             const lineItems = session.line_items.data.map((item) => ({
                 productId: item.price.product,
                 quantity: item.quantity
-            }))
+            }));
+
             const amount = session.amount_total / 100;
+
             order = new orderModel({
                 orderId: paymentIntentId,
                 products: lineItems,
                 amount: amount,
                 email: session.customer_details.email,
-                status: session.payment_intent.status === "succeed" ? "pending" : "failed"
+                status: session.payment_intent.status === "succeeded" ? "pending" : "failed" // Fixed
             });
         } else {
-            order.status = session.payment_intent.status === "succeeded" ? "pending" : "failed";
+            order.status = session.payment_intent.status === "succeeded" ? "pending" : "failed"; // Fixed
         }
+
         await order.save();
         return successResponse(res, 200, "Order created successfully", order);
     } catch (error) {
+        console.log(error);
         return errorResponse(res, 500, "Something went wrong", error);
     }
-}
+};
+
 
 // order by email id
 

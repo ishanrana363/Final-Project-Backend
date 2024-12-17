@@ -93,5 +93,25 @@ const isAdmin = (req, res, next) => {
     }
 };
 
+const isUser = (req, res, next) => {
+    try {
+        let role = req.headers.role;
+        if (role !== "user") {
+            return res.status(403).json({
+                status: "fail",
+                msg: "You have not permission"
+            })
+        }
+        next();
 
-module.exports = { isLogIn, isLogOut, isAdmin };
+    } catch (error) {
+        return res.status(500).json({
+            status: "fail",
+            msg: error.toString()
+        })
+    }
+};
+
+
+
+module.exports = { isLogIn, isLogOut, isAdmin,isUser };
