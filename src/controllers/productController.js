@@ -136,4 +136,16 @@ const deleteProduct = async (req, res) => {
     }
 };
 
-module.exports = { createProduct, getAllProducts, getProductById, updateProduct, deleteProduct };
+const allProducts = async (req, res) => {
+    try {
+        let products = await productModel.find({}).sort({createdAt:-1});
+        return successResponse(res, 200, "All products fetched successfully.", products);
+    } catch (error) {
+        return errorResponse(res, 500, "Something went wrong", error);
+    }
+};
+
+
+
+
+module.exports = { createProduct, getAllProducts, getProductById, updateProduct, deleteProduct,allProducts };

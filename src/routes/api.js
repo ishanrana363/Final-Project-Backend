@@ -32,8 +32,9 @@ router.get("/user-profile", isLogIn, userCotroller.userProfile);
 router.post("/create-product", isLogIn, isAdmin, productController.createProduct);
 router.get("/", productController.getAllProducts);
 router.get("/single-product/:id", productController.getProductById);
-router.put("/product-update/:id",isLogIn,isAdmin ,productController.updateProduct)
-router.delete("/product-delete/:id",isLogIn,isAdmin,productController.deleteProduct)
+router.put("/product-update/:id",isLogIn,isAdmin ,productController.updateProduct);
+router.delete("/product-delete/:id",isLogIn,isAdmin,productController.deleteProduct);
+router.get("/all-product", isLogIn , isAdmin , productController.allProducts);
 
 // revicew related api
 
